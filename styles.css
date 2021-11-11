@@ -101,3 +101,12 @@ overflow:hidden;
   color: #fff;
   font-size: 700%;  
 }
+#dino{
+	background-image: url("dino.png");
+	z-index:1000;
+	padding-left : 180px;
+	padding-top : 180px;
+	padding-bottom : 0px;
+	padding-right : 0px;
+	position: absolute;
+    top: 80%; right: 0; bottom: 10%; left: 20%;
