@@ -40,7 +40,7 @@ Cat = function(){
   });
 
   var redMat = new THREE.MeshLambertMaterial ({
-    color: 0xa8973e, 
+    color: 0xCA5252, 
     shading:THREE.FlatShading
   });
 
@@ -54,19 +54,19 @@ Cat = function(){
     shading:THREE.FlatShading
   });
   var brownMat = new THREE.MeshLambertMaterial ({
-    color: 0x855d77,//0x4b342a, 73edc4
+    color: 0x5D8562,//0x4b342a, 
     shading:THREE.FlatShading
   });
 
   var lightBrownMat = new THREE.MeshLambertMaterial ({
-    color: 0x664a5d, 
+    color: 0x365139, 
     shading:THREE.FlatShading
   });
 
-  this.handHeight = 10;
-  this.bodyHeight = 80;
+  this.handHeight = 50;
+  this.bodyHeight = 100;
   this.armHeight = ((this.bodyHeight * 3/5) - this.handHeight)/2 ;
-  this.faceHeight = 30;
+  this.faceHeight = 28;
   this.shouldersPosition = new THREE.Vector3(0,this.armHeight*2 + this.handHeight, 0);
   this.isAttacking = false;
   this.isFootReplacing = false;
@@ -81,23 +81,23 @@ Cat = function(){
 
   // torso
 
-  var torsoGeom = new THREE.CylinderGeometry(0, 26 ,this.bodyHeight,3,1);
+  var torsoGeom = new THREE.CylinderGeometry(5, 26 ,this.bodyHeight,3,1);
   this.torso = new THREE.Mesh(torsoGeom,brownMat);
   this.torso.geometry.applyMatrix(new THREE.Matrix4().makeRotationY(Math.PI/3));
   this.torso.geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,-this.bodyHeight/2,0));
   
   // chest
 
-  var chestGeom = new THREE.CylinderGeometry(6,0, 17, 3);
+  var chestGeom = new THREE.CylinderGeometry(1,0, 60, 3);
   chestGeom.applyMatrix(new THREE.Matrix4().makeRotationY(Math.PI/3));
   chestGeom.applyMatrix(new THREE.Matrix4().makeScale(1,1,.3));
   this.chest = new THREE.Mesh(chestGeom, whiteMat);
-  this.chest.position.set(0,-30,1);
+  this.chest.position.set(0,-50,1);
 
   // head
   this.head = new THREE.Group();
 
-  var faceGeom = new THREE.BoxGeometry(30,this.faceHeight,30);
+  var faceGeom = new THREE.BoxGeometry(25,this.faceHeight,25);
   this.face = new THREE.Mesh(faceGeom,brownMat);
   this.face.geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,this.faceHeight/2,0));
   this.face.geometry.applyMatrix(new THREE.Matrix4().makeRotationY(Math.PI/4));
@@ -147,7 +147,7 @@ Cat = function(){
 
   
   // Whiskers
-  var whiskerGeom = new THREE.BoxGeometry(16, .2,.2);
+  var whiskerGeom = new THREE.BoxGeometry(0, .2,.2);
 
   this.whisker1 = new THREE.Mesh(whiskerGeom, lightBrownMat);
   this.whisker1.geometry.applyMatrix(new THREE.Matrix4().makeTranslation(-7,0,0));
@@ -203,21 +203,21 @@ Cat = function(){
 
   this.rightEar = new THREE.Mesh(rightEarGeom, brownMat);
   this.rightEar.position.y = this.faceHeight;
-  this.rightEar.position.x = -14;
-  this.rightEar.position.z = -1.7;  
+  this.rightEar.position.x = 0;//-14
+  this.rightEar.position.z = -10;  //1.7
   
   this.leftEar = new THREE.Mesh(leftEarGeom, brownMat);
-  this.leftEar.position.x = -this.rightEar.position.x;
-  this.leftEar.position.z = this.rightEar.position.z;
-  this.leftEar.position.y = this.rightEar.position.y;
+  this.leftEar.position.x = 0;//-14
+  this.leftEar.position.z = -5;  //1.7
+  this.leftEar.position.y = this.faceHeight;
 
 
   var rightEarInsideGeom = rightEarGeom.clone();
   rightEarInsideGeom.applyMatrix(new THREE.Matrix4().makeScale(.5, .5, .5));
   this.rightEarInside = new THREE.Mesh(rightEarInsideGeom, pinkMat);
-  this.rightEarInside.position.y = .5;
-  this.rightEarInside.position.x = 1;
-  this.rightEarInside.position.z = 2;
+  this.rightEarInside.position.y = .5;//.5
+  this.rightEarInside.position.x = 1;//1
+  this.rightEarInside.position.z = 2;//2
 
   this.rightEar.add(this.rightEarInside);
 
@@ -230,8 +230,9 @@ Cat = function(){
 
   this.leftEar.add(this.leftEarInside);
 
+
   // Eyes
-  var eyeGeom = new THREE.BoxGeometry(12,12, 1);
+  var eyeGeom = new THREE.BoxGeometry(5,12, 2);
   this.rightEye = new THREE.Mesh(eyeGeom, whiteMat);
   this.rightEye.position.set(-12,20, 10);
   this.rightEye.rotation.y = -Math.PI/4;
@@ -241,9 +242,9 @@ Cat = function(){
   this.leftEye.rotation.y = Math.PI/4;
 
   // Iris
-  var irisGeom = new THREE.BoxGeometry(4,4,2);
+  var irisGeom = new THREE.BoxGeometry(2,4,2);
   this.rightIris = new THREE.Mesh(irisGeom, brownMat);
-  this.rightIris.position.x = 2;
+  this.rightIris.position.x = 0;
   this.rightIris.position.y = -2;
   this.rightIris.position.z = .5;
 
@@ -254,7 +255,7 @@ Cat = function(){
   this.leftEye.add(this.leftIris);
 
   // nose
-  var noseGeom = new THREE.CylinderGeometry(3,0,4,4)
+  var noseGeom = new THREE.CylinderGeometry(3,0,4,10)
   noseGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0,-2,-4));
 
   var skewMatrixNose = new THREE.Matrix4().set(   1,    0,     0,    0,
@@ -264,26 +265,26 @@ Cat = function(){
 
   noseGeom.applyMatrix(skewMatrixNose);
   this.nose = new THREE.Mesh(noseGeom, pinkMat);
-  this.nose.position.z = 24;
+  this.nose.position.z = 0;
   this.nose.position.y =14.1;
 
 
   // cheeks
-  var cheeksGeom = new THREE.CylinderGeometry(8,8,14,4);
+  var cheeksGeom = new THREE.CylinderGeometry(15,15,14,8);
   cheeksGeom.applyMatrix(new THREE.Matrix4().makeScale(1,1,1.4));
   this.cheeks = new THREE.Mesh(cheeksGeom, brownMat);
   this.cheeks.position.set(0, 7, 13 );
 
   // mouth
   var mouthGeom = cheeksGeom.clone();//new THREE.BoxGeometry(4,2,4);
-  mouthGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0,-4,0));
-  mouthGeom.applyMatrix(new THREE.Matrix4().makeScale(.5,.2,.5));
+  mouthGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0,-40,0));
+  mouthGeom.applyMatrix(new THREE.Matrix4().makeScale(.9,.2,.9));
   this.mouth = new THREE.Mesh(mouthGeom, brownMat);
   
 
   // tongue
   var tongueGeom = mouthGeom.clone();
-  tongueGeom.applyMatrix(new THREE.Matrix4().makeScale(.8,1,.8));
+  tongueGeom.applyMatrix(new THREE.Matrix4().makeScale(.4,1,.8));
   this.tongue = new THREE.Mesh(tongueGeom, pinkMat);
   this.tongue.position.set(0, .5, 0); 
   this.mouth.add(this.tongue);
@@ -309,12 +310,12 @@ Cat = function(){
   this.rightShoulder = new THREE.Group();
   this.leftShoulder = new THREE.Group();
 
-  this.rightShoulder.position.set(-6, this.shouldersPosition.y, 0);
-  this.leftShoulder.position.set(6, this.shouldersPosition.y, 0);
+  this.rightShoulder.position.set(-8, this.shouldersPosition.y, 0);
+  this.leftShoulder.position.set(8, this.shouldersPosition.y, 0);
 
 
   // arms
-  var armGeom = new THREE.CylinderGeometry(4, 6, this.armHeight+5,4);
+  var armGeom = new THREE.CylinderGeometry(6, 4, this.armHeight+5,4);
   armGeom.applyMatrix(new THREE.Matrix4().makeRotationY(Math.PI/4));
   armGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0, -this.armHeight/2, 0));
 
@@ -326,7 +327,7 @@ Cat = function(){
   
   // forearms
 
-  var foreArmGeom = new THREE.CylinderGeometry(6, 7, this.armHeight,4);
+  var foreArmGeom = new THREE.CylinderGeometry(4, 3, this.armHeight,4);
   foreArmGeom.applyMatrix(new THREE.Matrix4().makeRotationY(Math.PI/4));
   foreArmGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0, -this.armHeight/2, 0));
 
@@ -339,7 +340,7 @@ Cat = function(){
   this.leftArm.add(this.leftForeArm);
 
   // foot = front foot
-  var footGeom = new THREE.BoxGeometry(10,10,10);
+  var footGeom = new THREE.BoxGeometry(2,10,2);
   this.rightFoot = new THREE.Mesh(footGeom, whiteMat);
   this.rightFoot.geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,0,0));
   this.rightFoot.position.set(0,-this.armHeight-5,0);
@@ -348,7 +349,7 @@ Cat = function(){
   this.leftForeArm.add(this.leftFoot);
 
   //footPad
-  var footPadGeom = new THREE.BoxGeometry(8,2,8);
+  var footPadGeom = new THREE.BoxGeometry(1,2,1);
   this.rightFootPad = new THREE.Mesh(footPadGeom, pinkMat);
   this.rightFootPad.position.y = -4.5;
   this.rightFoot.add(this.rightFootPad)
@@ -357,7 +358,7 @@ Cat = function(){
   this.leftFoot.add(this.leftFootPad)
 
   // knees
-  var kneeGeom = new THREE.BoxGeometry(8,30,30);
+  var kneeGeom = new THREE.BoxGeometry(15,40,30);
   kneeGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0,15,0));
   
   this.rightKnee = new THREE.Mesh(kneeGeom, brownMat);
@@ -370,7 +371,7 @@ Cat = function(){
   this.leftKnee.position.x = -this.rightKnee.position.x;
 
   // legs = back legs
-  var legGeom = new THREE.BoxGeometry(12,6,4);
+  var legGeom = new THREE.BoxGeometry(5,3,2);
   this.rightLeg = new THREE.Mesh(legGeom, whiteMat);
   this.rightLeg.position.set(0,3,17);
   this.rightKnee.add(this.rightLeg);
@@ -393,7 +394,7 @@ Cat = function(){
   this.tailNSegs = 8 ;
   this.tailSegements = [];
 
-  var tailSegGeom = new THREE.CylinderGeometry(5, 4, segHeight, 4);
+  var tailSegGeom = new THREE.CylinderGeometry(1, 2, segHeight, 40);
   tailSegGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0,segHeight/2,0));
   
   
@@ -428,12 +429,13 @@ Cat = function(){
 
   
 
-  var stripeGeom2 = new THREE.BoxGeometry(8,2,10);
+  var stripeGeom2 = new THREE.BoxGeometry(5,2,10);
   var stripe2 = new THREE.Mesh(stripeGeom2, lightBrownMat);
   stripe2.rotation.y = Math.PI/4;
+  stripe2.rotation.x = Math.PI/4;
   stripe2.position.x = 15.6;
   stripe2.position.y = 8;
-  stripe2.position.z = -1;
+  stripe2.position.z = 10;
 
   var stripe3 = stripe2.clone();
   stripe3.position.y = 4;
@@ -446,10 +448,10 @@ Cat = function(){
   stripe5.position.y = stripe3.position.y;
 
 
-  var stripeGeom3 = new THREE.BoxGeometry(1.6,1,10);
+  var stripeGeom3 = new THREE.BoxGeometry(3,1,20);
   var stripe6 = new THREE.Mesh(stripeGeom3, lightBrownMat);
   stripe6.position.x = -2.1;
-  stripe6.position.z = 15;
+  stripe6.position.z = 10;
   stripe6.position.y = 30;
 
   var stripe7 = stripe6.clone();
